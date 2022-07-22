@@ -11,9 +11,11 @@ import { DashboardLayout } from '../components/dashboard-layout';
 import { getPrices, getBalances, getTreasuryAssets } from '../helpers'
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
+ 
 
-const Dashboard = () => { 
 
+
+const Dashboard = () => {  
   const [prices, setPrices] = useState();
   const [balances, setBalances] = useState([]);
   const [treasuryAssets, setTreasuryAseets] = useState([]);
@@ -23,21 +25,23 @@ const Dashboard = () => {
   const [alertMessage, setAlertMessage] = useState("");
   const [alertSeverity, setAlertSeverity] = useState("");
 
-  useEffect(() => {  
-    fetchData(); 
+ 
+  useEffect(() => { 
+      fetchData(); 
   }, []);
 
   useEffect(() => { }, [balances])
 
 
   const fetchData = async () => {
+  
       const _prices = await getPrices();
       const _balances = await getBalances();
-      const _treasuryAssets = await getTreasuryAssets();
-       
-      if(_prices){
-        setPrices(_prices);
-        if(_balances.success){
+      const _treasuryAssets = await getTreasuryAssets(); 
+      console.log("Prices:L", _prices)
+      if(_prices.success){
+         setPrices(_prices);
+        if(_balances.success){ 
           setTotalBalance(_balances.total);
           setBalances(_balances.data);
         }  
@@ -46,11 +50,11 @@ const Dashboard = () => {
           setTotalValue(_treasuryAssets.total);
         }  
       }else{ 
-        setAlertMessage("Wrong network!");
+        setAlertMessage("API Error!");
         setAlertSeverity("error");
         setTimeout(() => {
           fetchData();
-        }, 3000);
+        }, 6000);
       } 
       setIsLoading(false);
   }

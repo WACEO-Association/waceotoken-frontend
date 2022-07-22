@@ -55,7 +55,7 @@ export const Multisig = (props) => {
           } 
         
         }catch(e){
-          setAlertMessage(response.message);
+          setAlertMessage(e.message);
           setAlertSeverity("error");
             console.log(e)
         }

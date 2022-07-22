@@ -12,7 +12,7 @@ import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 import RequestPageIcon from '@mui/icons-material/RequestPage'; 
 import { NavItem } from './nav-item'; 
 import { getOwners } from '../helpers' 
-
+import ListIcon from '@mui/icons-material/List';
 
 
 export const DashboardSidebar = (props) => {
@@ -75,11 +75,8 @@ export const DashboardSidebar = (props) => {
               setIsOwner(true);
             }
           }  
-        }else{
-          setTimeout(() => {
-            getListOfOwners()
-          }, 2000);
         } 
+         
       } 
     }catch(e){
       console.log(e)
@@ -140,6 +137,12 @@ export const DashboardSidebar = (props) => {
             icon={<RequestPageIcon fontSize="small" />}
             href="/request"
             title="Calculator"
+          />
+           <NavItem
+            key="Transfers"
+            icon={<ListIcon fontSize="small" />}
+            href="/transactions"
+            title="Transfers"
           />
          {isOwner == true && (
             <NavItem

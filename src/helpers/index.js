@@ -14,3 +14,4 @@ export * from "./confirm-transaction";
 export * from "./get-minter-transactions";
 export * from "./get-balances";
 export * from "./get-treasury-assets";
+export * from "./get-waceo-transactions";

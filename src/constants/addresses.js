@@ -2,7 +2,9 @@ import Networks from "./networks";
 
 const AVAX_FUJI = {
     ChainId: "43113",
+    ChainId_Hex: "0xa869",
     EUR_USD_Indicator: 0.94,
+    Big_Transfers_Amount: 100000,
     API_KEY: "ckey_6b953d6c14fb44b78ced9f2b439",
     Waceo: "0xa9079D37a06894E8Ed2a6E5Fb20E500d6a57563d",
     Minter: "0x2C7fF5bBbBa4312850CeA6BD05ab46A25414a0A6",
@@ -21,8 +23,7 @@ const AVAX_FUJI = {
         {
             tokenAddress: "0xe7BCC4637913267ECFC74c10E915386464ec018b",
             lpAddress: "0xD3E05FB480E18f26180617c17B639C578f409174"
-        },
-        
+        }, 
     ],
     Waceo_Funds: [
         {
@@ -56,8 +57,7 @@ const AVAX_FUJI = {
         {
             fund: "LP",
             address: "0x3F34ac42d4729A292f662D87E6b86c2B70d10C81",
-        },
-        
+        }  
     ]
 }
  

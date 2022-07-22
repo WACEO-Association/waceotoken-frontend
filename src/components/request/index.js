@@ -18,6 +18,8 @@ import Paper from '@mui/material/Paper';
   const [amount, setAmount] = useState("");
   const [amountError, setAmountError] = useState("");
   const [allowance, setAllowance] = useState("");
+  const [tokenPrice, setTokenPrice] = useState(0);
+  const [totalSupply, setTotalSupply] = useState(0);
   const [quote, setQuote] = useState("") ; 
   const [allowed, setAllowed] = useState(false) 
   const [isBaseToken, setIsBaseToken] = useState(false);
@@ -109,7 +111,7 @@ import Paper from '@mui/material/Paper';
  
   const handleGetAllowance = async () => {
     try{
-      const allowanceResponse = await props.getAllowance(tokenAddress, props.account );   
+      const allowanceResponse = await props.getAllowance(tokenAddress, lpAddress, props.account );   
       if(allowanceResponse.success){
         let allowanceValue = parseFloat(allowanceResponse.value).toFixed(2); 
         const isAllowed =  parseFloat(allowanceResponse.value) >= parseFloat(amount) ? true : false;
@@ -117,6 +119,8 @@ import Paper from '@mui/material/Paper';
         setAllowed(isAllowed); 
         setTokenSymbol(allowanceResponse.symbol);
         setTokenName(allowanceResponse.name);
+        setTokenPrice(allowanceResponse.priceInUSD)
+        setTotalSupply(allowanceResponse.supply)
       }
     }catch(e){
       console.log(e);
@@ -330,17 +334,50 @@ import Paper from '@mui/material/Paper';
           <Card> 
             <CardContent>
              {!isSubmited ? (
-              <Grid  container  spacing={3}  >
-                <Grid  item md={8} xs={12}  > 
-                    <TextField
-                      fullWidth
-                      label="Estimate WACEO tokens back"
-                      name="amount"  
-                      value={quote}
-                      variant="outlined"  
-                    /> 
-                </Grid> 
-              </Grid>  
+               <Grid  container  spacing={3}  >
+               <Grid  item md={12} xs={12}  >  
+                  <TableContainer component={Paper}>
+                   <Table sx={{ minWidth: 700 }} aria-label="spanning table"> 
+                     <TableBody> 
+                       <TableRow> 
+                         <TableCell colSpan={2}>Token Address</TableCell>
+                         <TableCell align="right"><Link href={blockExplorer+"address/"+tokenAddress} target="_blank">{tokenAddress}</Link> </TableCell>
+                       </TableRow>
+                       {lpAddress  && (
+                        <TableRow>
+                          <TableCell colSpan={2}>LP Address</TableCell> 
+                          <TableCell align="right"><Link href={(blockExplorer+"address/"+lpAddress)} target="_blank"> {lpAddress}</Link> </TableCell>
+                        </TableRow>
+                       )} 
+                       <TableRow>
+                         <TableCell colSpan={2}>Amount</TableCell>
+                         <TableCell align="right">{amount}</TableCell>
+                       </TableRow>
+                       <TableRow>
+                         <TableCell colSpan={2}>Token Name</TableCell>
+                         <TableCell align="right">{tokenName}</TableCell>
+                       </TableRow>
+                       <TableRow>
+                         <TableCell colSpan={2}>Token Symbol</TableCell>
+                         <TableCell align="right">{tokenSymbol}</TableCell>
+                       </TableRow> 
+                       <TableRow>
+                         <TableCell colSpan={2}>Total Supply</TableCell>
+                         <TableCell align="right">{totalSupply}</TableCell>
+                       </TableRow>
+                       <TableRow>
+                         <TableCell colSpan={2}>Token Price (USD)</TableCell>
+                         <TableCell align="right">{tokenPrice}$</TableCell>
+                       </TableRow> 
+                       <TableRow>
+                         <TableCell colSpan={2}>Estimate WACEO Tokens</TableCell>
+                         <TableCell align="right"><p style={{color:"green"}}> {quote}</p>  </TableCell>
+                       </TableRow> 
+                     </TableBody>
+                   </Table>
+                 </TableContainer>
+               </Grid> 
+             </Grid>  
              ):(
               <Grid  container  spacing={3}  >
                 <Grid  item md={12} xs={12}  >  
