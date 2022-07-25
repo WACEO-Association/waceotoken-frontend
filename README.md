@@ -1,4 +1,4 @@
-## [WACEO Frontend - React] 
+## WACEO Frontend
 ## Quick start
 
 - Make sure your NodeJS and npm versions are up to date for `React 17`
