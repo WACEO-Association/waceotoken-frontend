@@ -37,8 +37,7 @@ const Dashboard = () => {
   
       const _prices = await getPrices();
       const _balances = await getBalances();
-      const _treasuryAssets = await getTreasuryAssets(); 
-      console.log("Prices:L", _prices)
+      const _treasuryAssets = await getTreasuryAssets();  
       if(_prices.success){
          setPrices(_prices);
         if(_balances.success){ 

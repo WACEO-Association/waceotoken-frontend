@@ -7,7 +7,7 @@ export const getWaceoTransactions = async () => {
     try{
         
         const addresses = getAddresses(43113); 
-        const response = await axios.get('https://shark-app-bo2p5.ondigitalocean.app/api/waceo/transactions')
+        const response = await axios.get('https://seahorse-app-vf5b4.ondigitalocean.app/api/waceo/transactions'); 
         if(response.status === 200){
             if(response.data.length){
                 console.log("----------------------------------------"); 

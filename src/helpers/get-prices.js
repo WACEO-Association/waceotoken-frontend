@@ -5,17 +5,17 @@ import { format } from 'number-prettier';
 export const getPrices = async () => { 
     try{
         
-        const response = await axios.get('https://shark-app-bo2p5.ondigitalocean.app/api/waceo/prices')
+        const response = await axios.get('https://seahorse-app-vf5b4.ondigitalocean.app/api/waceo/prices'); 
         if(response.status === 200){
-            if(response.data.length){
+            if(response.data){
                 console.log("----------------------------------------"); 
-                console.log("WACEO PRICES:", response.data[0]);
+                console.log("WACEO PRICES:", response.data);
                 return {
                   success: true,
-                  waceoPriceInUsd: response.data[0].waceo_price_in_usd,
-                  waceoPriceInEur: response.data[0].waceo_price_in_eur, 
-                  waceoPriceInAvax: response.data[0].waceo_price_in_avax, 
-                  waceoTotalSupply: format(response.data[0].waceo_total_supply, 2) 
+                  waceoPriceInUsd: response.data.waceo_price_in_usd,
+                  waceoPriceInEur: response.data.waceo_price_in_eur, 
+                  waceoPriceInAvax: response.data.waceo_price_in_avax, 
+                  waceoTotalSupply: format(response.data.waceo_total_supply, 2) 
                 }
             }else{
                 return{success: false, message: "Something went wrong!"};

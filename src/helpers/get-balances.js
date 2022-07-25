@@ -3,19 +3,19 @@ import { commas } from 'number-prettier';
 export const getBalances = async () => { 
     try{
         
-        const response = await axios.get('https://shark-app-bo2p5.ondigitalocean.app/api/waceo/funds')
+        const response = await axios.get('https://seahorse-app-vf5b4.ondigitalocean.app/api/waceo/funds'); 
         if(response.status === 200){
-            if(response.data.length){
+            if(response.data){
                 let dataArr = [ ["Fund", "Value"] ]
-                for(let i of response.data[0].funds){
+                for(let i of response.data.funds){
                     dataArr.push(i);
                 } 
                 console.log("----------------------------------------");
-                console.log("WACEO FUNDS:", response.data[0]);
+                console.log("WACEO FUNDS:", response.data);
                 return {
                     success: true, 
                     data: dataArr, 
-                    total: commas(response.data[0].total_waceo_amount , 2)
+                    total: commas(response.data.total_waceo_amount , 2)
                 };;
             }else{
                 return{success: false, message: "Something went wrong!"};

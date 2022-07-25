@@ -16,13 +16,13 @@ export const getTreasuryAssets = async () => {
             return 0;
         } 
 
-        const response = await axios.get('https://shark-app-bo2p5.ondigitalocean.app/api/waceo/treasury')
+        const response = await axios.get('https://seahorse-app-vf5b4.ondigitalocean.app/api/waceo/treasury'); 
         if(response.status === 200){
-            if(response.data.length){
+            if(response.data){
                
                 console.log("----------------------------------------");
-                console.log("WACEO TREASURY:", response.data[0]);
-                let dataArr =  response.data[0].tokens
+                console.log("WACEO TREASURY:", response.data);
+                let dataArr =  response.data.tokens
                 dataArr.unshift(["Fund", "Value"]);
 
                
@@ -31,7 +31,7 @@ export const getTreasuryAssets = async () => {
                 return {
                     success: true, 
                     data: dataArr, 
-                    total: commas(response.data[0].total_market_value, 2) };
+                    total: commas(response.data.total_market_value, 2) };
             }else{
                 return{success: false, message: "Something went wrong!"};
             }
