@@ -86,6 +86,9 @@ export const Transfers = (props) => {
                     Txn Hash
                     </TableCell>
                     <TableCell>
+                    Method
+                    </TableCell>
+                    <TableCell>
                     Block
                     </TableCell>
                     <TableCell>
@@ -110,6 +113,9 @@ export const Transfers = (props) => {
                     <TableRow hover  key={txn.key}  > 
                         <TableCell> 
                             <Link href={txn.txn_url} target="_blank">{txn.transaction_hash.slice(0,8)+"...."+txn.transaction_hash.slice(txn.transaction_hash.length-14,txn.transaction_hash.length)}</Link>
+                        </TableCell>
+                        <TableCell> 
+                          {txn.method} 
                         </TableCell>
                         <TableCell> 
                             <Link href={`${blockExplorer}block/${txn.block_number}`} target="_blank"> {txn.block_number}</Link>

@@ -18,9 +18,12 @@ export const getAllowance = async ( _tokenAddress, _lpAddress, _ownerAddress ) =
             const totalSupply = await tokenContract.totalSupply();
             const formattedTotalSupply =  format( parseFloat(totalSupply.toString())/10**decimals, 2);
  
-            const response = await tokenContract.allowance( _ownerAddress, addresses.Minter ); 
-            const formatedResponse = parseFloat(response.toString())/10**decimals;
-
+            let formatedResponse;
+            if(_ownerAddress){
+                const response = await tokenContract.allowance( _ownerAddress, addresses.Minter ); 
+                formatedResponse = parseFloat(response.toString())/10**decimals; 
+            };
+           
 
             // GET avax price in USD
             const baseTokenContract = new ethers.Contract(addresses.Base, ERC20, provider);

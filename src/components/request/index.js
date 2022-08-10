@@ -110,7 +110,7 @@ import Paper from '@mui/material/Paper';
 
  
   const handleGetAllowance = async () => {
-    try{
+    try{ 
       const allowanceResponse = await props.getAllowance(tokenAddress, lpAddress, props.account );   
       if(allowanceResponse.success){
         let allowanceValue = parseFloat(allowanceResponse.value).toFixed(2); 
@@ -197,21 +197,27 @@ import Paper from '@mui/material/Paper';
 
   const handleApproveTokens = async () => {
     try{
-      setIsLoading(true); 
-      const response = await props.approveTokens(tokenAddress, amount) 
-      if(response.success){
-        setTimeout(() => {
-          setAlertMessage("Transaction confirmed!");
-          setAlertSeverity("success")
-          setAllowed(true); 
+     
+      if(props.account ){
+        setIsLoading(true);
+        const response = await props.approveTokens(tokenAddress, amount) 
+        if(response.success){
+          setTimeout(() => {
+            setAlertMessage("Transaction confirmed!");
+            setAlertSeverity("success")
+            setAllowed(true); 
+            setIsLoading(false);
+          }, 5000);
+        }else{
           setIsLoading(false);
-        }, 5000);
+          setAlertMessage(response.message);
+          setAlertSeverity("error");
+        }
       }else{
-        setIsLoading(false);
-        setAlertMessage(response.message);
+        setAlertMessage("Connect wallet to approve tokens!");
         setAlertSeverity("error");
       }
-     
+       
       
     }catch(e){
       console.log(e);
@@ -259,7 +265,7 @@ import Paper from '@mui/material/Paper';
               >
                 <TextField
                   fullWidth 
-                  label="Token address"
+                  label="Token Address"
                   name="tokenAddress"
                   onChange={(e) => { 
                     if(e.target.value.toLowerCase().replace(/ /g,'') == baseToken.toLowerCase()){
@@ -289,7 +295,7 @@ import Paper from '@mui/material/Paper';
               >
                 <TextField
                   fullWidth
-                  label="LP address "
+                  label="LP Address "
                   name="lpAddress"
                   onChange={e => {
                     setLpAddress(e.target.value.replace(/ /g,''));
@@ -311,7 +317,7 @@ import Paper from '@mui/material/Paper';
               >
                 <TextField
                   fullWidth
-                  label="Amount"
+                  label="Token Amount"
                   name="amount"
                   InputProps={{ inputProps: { min: 0 } }}
                   onChange={e => {
