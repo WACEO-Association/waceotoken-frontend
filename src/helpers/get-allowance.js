@@ -4,7 +4,7 @@ import { getAddresses } from "../constants";
 import { format } from 'number-prettier'; 
 import { ethers } from "ethers";    
 
-export const getAllowance = async ( _tokenAddress, _lpAddress, _ownerAddress ) => { 
+export const getAllowance = async ( _tokenAddress, _lpAddress, _ownerAddress, _amount ) => { 
     try{
         const provider  = new ethers.providers.Web3Provider(window.ethereum) ; 
         const { chainId } = await provider.getNetwork(); 
@@ -36,8 +36,8 @@ export const getAllowance = async ( _tokenAddress, _lpAddress, _ownerAddress ) =
             const avaxPriceInUSD = (stableTokenAmont/(10**stableTokenDecimals))/(baseTokenAmont /(10**baseTokenDecimals));
             let tokenPriceInUSD = 0;
             let tokenValueInAvax = 0;
-            // GET token value in AVAX
-
+           
+            // GET token value in AVAX 
             if(_lpAddress){
                 const tokenBalance =  await tokenContract.balanceOf(_lpAddress);
                 const baseTokenBalance = await baseTokenContract.balanceOf(_lpAddress); 
@@ -46,14 +46,15 @@ export const getAllowance = async ( _tokenAddress, _lpAddress, _ownerAddress ) =
             }else if(_tokenAddress.toLowerCase() == addresses.Base.toLowerCase()){
                 tokenPriceInUSD = avaxPriceInUSD; 
             } 
-
+            let totalUSDValue = parseFloat(parseFloat(tokenPriceInUSD) * parseFloat(_amount)).toFixed(2);
             return {
                 success: true, 
                 value: formatedResponse, 
                 name: tokenName, 
                 symbol: tokenSymbol,
                 supply: formattedTotalSupply,
-                priceInUSD: tokenPriceInUSD 
+                priceInUSD: tokenPriceInUSD,
+                totalUSDValue:  totalUSDValue
             };
         }else{
             return{success: false, message: "Wrong Network!"}

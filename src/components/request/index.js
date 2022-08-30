@@ -19,6 +19,7 @@ import Paper from '@mui/material/Paper';
   const [amountError, setAmountError] = useState("");
   const [allowance, setAllowance] = useState("");
   const [tokenPrice, setTokenPrice] = useState(0);
+  const [totalUsdValue, setTotalUsdValue] = useState(0);
   const [totalSupply, setTotalSupply] = useState(0);
   const [quote, setQuote] = useState("") ; 
   const [allowed, setAllowed] = useState(false) 
@@ -111,7 +112,7 @@ import Paper from '@mui/material/Paper';
  
   const handleGetAllowance = async () => {
     try{ 
-      const allowanceResponse = await props.getAllowance(tokenAddress, lpAddress, props.account );   
+      const allowanceResponse = await props.getAllowance(tokenAddress, lpAddress, props.account, amount );   
       if(allowanceResponse.success){
         let allowanceValue = parseFloat(allowanceResponse.value).toFixed(2); 
         const isAllowed =  parseFloat(allowanceResponse.value) >= parseFloat(amount) ? true : false;
@@ -120,6 +121,7 @@ import Paper from '@mui/material/Paper';
         setTokenSymbol(allowanceResponse.symbol);
         setTokenName(allowanceResponse.name);
         setTokenPrice(allowanceResponse.priceInUSD)
+        setTotalUsdValue(allowanceResponse.totalUSDValue);
         setTotalSupply(allowanceResponse.supply)
       }
     }catch(e){
@@ -295,7 +297,7 @@ import Paper from '@mui/material/Paper';
               >
                 <TextField
                   fullWidth
-                  label="LP Address "
+                  label="AVAX-Token LP Address "
                   name="lpAddress"
                   onChange={e => {
                     setLpAddress(e.target.value.replace(/ /g,''));
@@ -376,9 +378,13 @@ import Paper from '@mui/material/Paper';
                          <TableCell align="right">{tokenPrice}$</TableCell>
                        </TableRow> 
                        <TableRow>
+                         <TableCell colSpan={2}>Total Estimated $ Value</TableCell>
+                         <TableCell align="right"><p style={{color:"green"}}> {totalUsdValue}$</p>  </TableCell>
+                       </TableRow> 
+                       <TableRow>
                          <TableCell colSpan={2}>Estimate WACEO Tokens</TableCell>
                          <TableCell align="right"><p style={{color:"green"}}> {quote}</p>  </TableCell>
-                       </TableRow> 
+                       </TableRow>  
                      </TableBody>
                    </Table>
                  </TableContainer>

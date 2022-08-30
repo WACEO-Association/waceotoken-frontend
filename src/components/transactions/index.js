@@ -124,10 +124,10 @@ export const Transfers = (props) => {
                             {txn.date}
                         </TableCell>
                           <TableCell> 
-                            <Link href={txn.from_url} target="_blank">{txn.from_address.slice(0,8)+"...."+txn.from_address.slice(txn.from_address.length-6,txn.from_address.length)}</Link>
+                            <Link href={txn.from_url} target="_blank">{txn.from_address_label ? txn.from_address_label : txn.from_address.slice(0,8)+"...."+txn.from_address.slice(txn.from_address.length-6,txn.from_address.length)}</Link>
                         </TableCell> 
                         <TableCell> 
-                            <Link href={txn.to_url} target="_blank">{txn.to_address.slice(0,8)+"...."+txn.to_address.slice(txn.to_address.length-6,txn.to_address.length)}</Link>
+                            <Link href={txn.to_url} target="_blank">{txn.to_address_label ? txn.to_address_label : txn.to_address.slice(0,8)+"...."+txn.to_address.slice(txn.to_address.length-6,txn.to_address.length)}</Link>
                         </TableCell>
                         <TableCell>
                             {txn.formattedValue}
